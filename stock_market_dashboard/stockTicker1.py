@@ -3,7 +3,8 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-
+# import for input/output
+from dash.dependencies import Input, Output
 # launch application
 app = dash.Dash()
 
@@ -29,6 +30,29 @@ app.layout = html.Div([
         }
     )
 ])
+
+# add callback function
+@app.callback(
+    Output('my_graph', 'figure'),
+    [
+        Input('my_ticker_symbol', 'value')
+    ]
+)
+
+def update_graph(stock_ticker):
+    fig = {
+        'data': [
+            {
+                'x': [1, 2],
+                'y': [3, 1]
+            }
+        ], 
+        'layout':{
+            'title': stock_ticker
+        }
+    }
+    return fig
+
 
 # run the server
 
